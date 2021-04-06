@@ -6,12 +6,14 @@
           <use xlink:href="#home"></use>
         </svg>
       </button>
-      <button class="main__header--dashboard">
-        <svg class="symbol__trello--dashboard">
-          <use xlink:href="#trello-dashboard"></use>
-        </svg>
-        <span class="header__dashboard-text">Доски</span>
-      </button>
+      <router-link to="/main" class="notext-decoration">
+        <button class="main__header--dashboard">
+          <svg class="symbol__trello--dashboard">
+            <use xlink:href="#trello-dashboard"></use>
+          </svg>
+          <span class="header__dashboard-text">Доски</span>
+        </button>
+      </router-link>
     </div>
     <div class="main__header--middle">
       <img src="img/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif" alt="" class="main__header--symbol">
@@ -20,9 +22,9 @@
       <button class="main__header--create" v-on:click="clickCreateBoard">
         Создать доску
       </button>
-    <button class="main__header--username" v-on:click="clickMenu">
-      ДГ
-    </button>
+      <button class="main__header--username" v-on:click="clickMenu">
+        ДГ
+      </button>
     </div>
   </header>
 </template>
@@ -30,13 +32,13 @@
 <script>
 export default {
   name: "AppHeaderMain",
-  data: () => ({
-  }),
+  data: () => ({}),
   methods: {
-    clickMenu(){
+    clickMenu() {
       this.$store.commit('clickMenu')
+      console.log(this.$store.state.activeMenu)
     },
-    clickCreateBoard(){
+    clickCreateBoard() {
       this.$store.commit('activeModalBoard')
     }
   },
