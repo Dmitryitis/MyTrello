@@ -3,6 +3,7 @@ import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Registration from "@/views/Registration";
 import NotFound from "@/views/NotFound";
+import Main from "@/views/Main";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -10,7 +11,8 @@ const router = createRouter({
         {path: '/login', component: Login},
         {path: '/', component: Home},
         {path: '/registration', component: Registration},
-        {path: '/:notFound(.*)', component: NotFound}
+        {path: '/:notFound(.*)', component: NotFound},
+        {path: '/main', component: Main}
     ]
 })
 

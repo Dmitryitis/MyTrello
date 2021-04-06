@@ -1,5 +1,5 @@
 <template>
-  <form class="login__form" >
+  <form class="login__form" method="post">
     <div id="error" class="error__block">
       <p class="error__message">
         Аккаунт с таким адресом электронной почты не существует
@@ -10,31 +10,20 @@
       <input type="text" name="email" class="login__form--field" placeholder="Укажите адрес электронной почты">
     </div>
     <div class="form__group">
+      <input type="text" name="email" class="login__form--field" placeholder="Введите имя">
+    </div>
+    <div class="form__group">
       <input type="text" name="email" class="login__form--field" placeholder="Введите пароль">
     </div>
-    <router-link to="/main">
-      <button class="login__btn--input">Войти</button>
-    </router-link>
-    <p class="login__p--or">Или</p>
-
-    <button class="login__btn--vk">
-      <svg class="symbol__vk">
-        <use xlink:href="#vk"></use>
-      </svg>
-      <span class="btn__vk--text"></span>Войти через Вконтакте
-    </button>
-
-    <div class="line__login"></div>
-
-    <router-link to="/registration" class="button__form--link">
-      <a href="#" class="login__link--form">Зарегистрировать аккаунт</a>
+    <router-link to="/login">
+      <button class="login__btn--input">Зарегистрироваться</button>
     </router-link>
   </form>
 </template>
 
 <script>
 export default {
-  name: "AppLoginForm"
+  name: "AppRegistration"
 }
 </script>
 
