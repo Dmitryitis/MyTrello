@@ -1,8 +1,8 @@
 <template>
-  <div class="card-container">
+  <div class="card-container" v-on:click="clickCard">
     <div class="card-body">
       <p>
-        {{text}}
+        {{ text }}
       </p>
     </div>
   </div>
@@ -14,6 +14,11 @@ export default {
   props: {
     id: Number,
     text: String,
+  },
+  methods: {
+    clickCard() {
+      this.$store.commit('activateCard')
+    }
   }
 }
 </script>

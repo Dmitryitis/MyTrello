@@ -12,6 +12,7 @@ export default createStore({
             activeInvitation: false,
             activeArchive: false,
             activeCardList: false,
+            activeCard: false,
         }
     },
     mutations: {
@@ -43,6 +44,12 @@ export default createStore({
         },
         activateCardList(state) {
             state.activeCardList = state.activeCardList !== true;
+        },
+        activateCard(state) {
+            state.activePopup = false;
+            state.activeMenu = false;
+            state.activeArchive = false;
+            state.activeCard = state.activeCard !== true;
         }
     },
     actions: {},
