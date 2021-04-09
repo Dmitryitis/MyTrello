@@ -11,6 +11,7 @@ export default createStore({
             activePopup: false,
             activeInvitation: false,
             activeArchive: false,
+            activeCardList: false,
         }
     },
     mutations: {
@@ -39,6 +40,9 @@ export default createStore({
             state.activePopup = false;
             state.activeMenu = false;
             state.activeArchive = state.activeArchive !== true;
+        },
+        activateCardList(state) {
+            state.activeCardList = state.activeCardList !== true;
         }
     },
     actions: {},

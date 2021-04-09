@@ -24,13 +24,27 @@
         <div class="notext-decoration add__card">Добавить карточку</div>
       </a>
       <div v-if="!listsRefs[i]" class="card__textarea">
-        <textarea class="card__add--textarea" name="card__text" id="card__text" cols="30" rows="10"></textarea>
+        <textarea class="card__add--textarea" name="card__text" id="card__text" cols="30" rows="10"
+                  placeholder="Введите название карточки"></textarea>
         <div class="action__card">
-          <button class="card__add--btn">Добавить карточку</button>
-          <svg class="symbol__close--cardAdd" v-on:click="addCard(i)">
+          <button class="card__add--btn" v-on:click="clickBtnCard(i)">Добавить карточку</button>
+          <svg class="symbol__close--cardAdd" v-on:click="closeCard(i)">
             <use xlink:href="#close"></use>
           </svg>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-list-container--add">
+    <button class="card__list--addList" v-on:click="clickAddList">Добавить еще одну колонку</button>
+    <div v-if="activeCardList" class="card__textarea">
+        <textarea class="card__add--textarea" name="card__text" id="card__text--list" cols="30" rows="10"
+                  placeholder="Введите название карточки"></textarea>
+      <div class="action__card">
+        <button class="card__add--btn" v-on:click="addColumn">Добавить колонку</button>
+        <svg class="symbol__close--cardAdd" v-on:click="clickAddList">
+          <use xlink:href="#close"></use>
+        </svg>
       </div>
     </div>
   </div>
@@ -44,6 +58,7 @@ export default {
   components: {AppCard},
   data: () => ({
     listsRefs: [],
+    max_id_list: -1,
     lists: [
       {
         id: 1,
@@ -56,7 +71,7 @@ export default {
       {
         id: 3,
         name: 'ListThree'
-      }
+      },
     ],
     cards: [
       {
@@ -94,9 +109,14 @@ export default {
         text: 'fsdfs',
         name: 'ListThree'
       }
-
-    ]
+    ],
+    max_id: -1
   }),
+  computed: {
+    activeCardList() {
+      return this.$store.state.activeCardList
+    }
+  },
   methods: {
     getCards(list) {
       return this.cards.filter(card => card.name === list.name)
@@ -112,11 +132,40 @@ export default {
       item.name = list.name
     },
     addCard(i) {
+      for (let j = 0; j < this.listsRefs.length; j++) {
+        this.listsRefs[j] = true
+      }
       this.listsRefs[i] = this.listsRefs[i] !== true;
+    },
+    closeCard(i) {
+      this.listsRefs[i] = true
+    },
+    clickBtnCard(i) {
+      this.cards.push({
+        id: this.max_id + 1,
+        text: document.querySelector('#card__text').value,
+        name: this.lists[i].name
+      })
+      document.querySelector('#card__text').value = ''
+      this.listsRefs[i] = true
+    },
+    clickAddList() {
+      this.$store.commit('activateCardList')
+    },
+    addColumn() {
+      this.lists.push({
+        id: this.max_id_list,
+        name: document.querySelector('#card__text--list').value
+      })
+      document.querySelector('#card__text--list').value = ''
+      this.$store.commit('activateCardList')
     }
   },
   mounted() {
     this.lists.forEach(item => this.listsRefs.push(true))
+    console.log(this.listsRefs)
+    this.max_id = this.cards[this.cards.length - 1].id
+    this.max_id_list = this.lists[this.lists.length - 1].id
   }
 }
 </script>
