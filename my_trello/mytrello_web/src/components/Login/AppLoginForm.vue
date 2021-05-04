@@ -17,12 +17,12 @@
     <button class="login__btn--input" type="button" v-on:click="btnLogin">Войти</button>
     <p class="login__p--or">Или</p>
 
-    <button class="login__btn--vk">
+    <a href="http://localhost:9000/oauth2/authorization/google" class="login__btn--vk">
       <svg class="symbol__vk">
         <use xlink:href="#google"></use>
       </svg>
       <span class="btn__vk--text"></span>Войти через Google
-    </button>
+    </a>
 
     <div class="line__login"></div>
 
@@ -74,7 +74,10 @@ export default {
         this.error.status = true
         this.error.message = this.errors.error_empty
       }
-    }
+    },
+    // btnGoogle() {
+    //   router.push("http://localhost:9000/oauth2/authorization/google")
+    // }
   }
 }
 </script>

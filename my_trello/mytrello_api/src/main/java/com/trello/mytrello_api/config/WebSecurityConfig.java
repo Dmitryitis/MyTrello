@@ -1,9 +1,10 @@
 package com.trello.mytrello_api.config;
 
 import com.trello.mytrello_api.config.jwt.JwtRequestFilter;
+import com.trello.mytrello_api.handler.Oauth2LoginSuccessHandler;
+import com.trello.mytrello_api.service.oauth.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
-    private String clientId;
+    @Autowired
+    protected CustomOAuth2UserService oAuth2UserService;
 
-    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
-    private String clientSecret;
+    @Autowired
+    private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
 
     @Autowired
@@ -57,46 +58,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-//    @Bean
-//    public ClientRegistrationRepository clientRegistrationRepository() {
-//        List<ClientRegistration> registrations = clients.stream()
-//                .map(c -> getRegistration(c))
-//                .filter(registration -> registration != null)
-//                .collect(Collectors.toList());
-//        return new InMemoryClientRegistrationRepository(registrations);
-//    }
-
-//    private static String CLIENT_PROPERTY_KEY
-//            = "spring.security.oauth2.client.registration.";
-
-//    @Autowired
-//    private Environment environment;
-//
-//
-//    private ClientRegistration getRegistration(String client) {
-//        String clientId = environment.getProperty(CLIENT_PROPERTY_KEY + client + ".client-id");
-//        String clientSecret = environment.getProperty(CLIENT_PROPERTY_KEY + client + ".client-secret");
-//        if (client.equals("google")) {
-//            return CommonOAuth2Provider.GOOGLE.getBuilder(client).clientId(clientId).clientSecret(clientSecret).build();
-//        }
-//        return null;
-//    }
-//
-//    @Bean
-//    public OAuth2AuthorizedClientService authorizedClientService() {
-//        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
-//    }
-
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         final String corsOrigin = "http://localhost:8080";
 
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/api/v1/auth/authenticate", "/greeting","/api/v1/register", "/swagger-ui.html", "/v2/api-docs", "/webjars/**").permitAll()
+                .authorizeRequests().antMatchers("/api/v1/auth/authenticate", "/greeting", "/api/v1/register", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().oauth2Login();
+                .and().oauth2Login()
+                .loginPage("http://localhost:8080/main")
+                .userInfoEndpoint().userService(oAuth2UserService)
+                .and().successHandler(oauth2LoginSuccessHandler);
         httpSecurity.cors();
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

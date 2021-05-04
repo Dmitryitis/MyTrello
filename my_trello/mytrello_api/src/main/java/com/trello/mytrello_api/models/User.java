@@ -54,12 +54,20 @@ public class User implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "auth_provider")
+    private AuthenticationProvider authenticationProvider;
+
     public enum State {
         ACTIVE, BANNED
     }
 
     public enum Role {
         ADMIN, USER
+    }
+
+    public enum AuthenticationProvider {
+        LOCAL, GOOGLE
     }
 
     public boolean isActive() {
@@ -136,5 +144,13 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public AuthenticationProvider getAuthenticationProvider() {
+        return authenticationProvider;
+    }
+
+    public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
     }
 }

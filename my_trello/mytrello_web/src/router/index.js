@@ -40,7 +40,7 @@ const router = createRouter({
             meta: {
                 auth: true
             }
-        }
+        },
     ]
 })
 
