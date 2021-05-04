@@ -31,6 +31,7 @@ public class RegistrUserImpl implements RegistrUser {
         user.setState(User.State.ACTIVE);
         user.setRole(User.Role.USER);
         user.setLastVisit(LocalDateTime.now());
+        user.setAuthenticationProvider(User.AuthenticationProvider.LOCAL);
         userRepository.save(user);
 
         Map<Object, Object> response = new HashMap<>();

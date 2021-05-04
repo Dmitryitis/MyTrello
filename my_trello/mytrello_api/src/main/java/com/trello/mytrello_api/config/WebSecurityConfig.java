@@ -64,11 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         final String corsOrigin = "http://localhost:8080";
 
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/api/v1/auth/authenticate", "/greeting", "/api/v1/register", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/oauth2/**").permitAll()
+                .authorizeRequests().antMatchers("/api/v1/auth/**", "/greeting", "/api/v1/register", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().oauth2Login()
-                .loginPage("http://localhost:8080/main")
                 .userInfoEndpoint().userService(oAuth2UserService)
                 .and().successHandler(oauth2LoginSuccessHandler);
         httpSecurity.cors();
