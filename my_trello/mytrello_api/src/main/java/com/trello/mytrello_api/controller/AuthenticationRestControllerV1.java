@@ -64,8 +64,6 @@ public class AuthenticationRestControllerV1 {
         UserDetails userDetails = oauthUser.createOrGetUser(user_google);
 
         String token = jwtTokenUtil.generateToken(userDetails);
-
-        System.out.println(user_google);
         Map<Object, Object> res = new HashMap<>();
         res.put("token", token);
         res.put("status", 200);
