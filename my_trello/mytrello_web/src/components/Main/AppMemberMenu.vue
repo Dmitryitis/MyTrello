@@ -16,14 +16,14 @@
       </div>
     </div>
     <ul class="menu__user--ul">
-      <router-link to="/" class="notext-decoration">
-        <li class="menu__user--li">Выйти</li>
-      </router-link>
+      <li class="menu__user--li" v-on:click="btnLogout">Выйти</li>
     </ul>
   </section>
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "AppMemberMenu",
   data: () => ({}),
@@ -36,6 +36,10 @@ export default {
     closeMenu() {
       this.$store.commit('clickMenu')
     },
+    btnLogout() {
+      this.$store.commit('auth/logout')
+      router.push('/login')
+    }
   }
 }
 </script>

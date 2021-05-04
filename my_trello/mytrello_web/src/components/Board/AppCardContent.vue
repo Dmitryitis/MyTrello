@@ -150,6 +150,7 @@
         </div>
         <div class="card__window--sidebar">
           <div class="card__sidebar--title">Добавить на карточку</div>
+          <div class="card__sidebar--item">Участники</div>
           <div class="card__sidebar--item">Чек-лист</div>
           <div class="card__sidebar--item">Срок</div>
           <div class="card__sidebar--item">Вложение</div>

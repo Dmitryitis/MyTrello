@@ -36,7 +36,6 @@ export default {
   methods: {
     clickMenu() {
       this.$store.commit('clickMenu')
-      console.log(this.$store.state.activeMenu)
     },
     clickCreateBoard() {
       this.$store.commit('activeModalBoard')
