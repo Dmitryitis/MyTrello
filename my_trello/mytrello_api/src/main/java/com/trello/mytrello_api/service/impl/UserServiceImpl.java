@@ -4,6 +4,7 @@ import com.trello.mytrello_api.models.User;
 import com.trello.mytrello_api.repository.UserRepository;
 import com.trello.mytrello_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

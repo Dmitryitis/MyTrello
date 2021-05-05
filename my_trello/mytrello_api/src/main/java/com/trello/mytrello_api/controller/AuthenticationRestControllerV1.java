@@ -45,7 +45,7 @@ public class AuthenticationRestControllerV1 {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto userDto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
-
+        System.out.println("Find user: "+ userDto.getEmail());
         UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getEmail());
 
         String token = jwtTokenUtil.generateToken(userDetails);
