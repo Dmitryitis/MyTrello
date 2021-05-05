@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/api/v1/")
 public class RegistrationRestControllerV1 {
@@ -23,7 +25,7 @@ public class RegistrationRestControllerV1 {
     @ApiOperation(value = "Регистрация пользователя")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Успешно добавлено", response = RegistrDto.class)})
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registr(@RequestBody RegistrDto registrDto) {
+    public ResponseEntity<?> registr(@Valid @RequestBody RegistrDto registrDto) {
         return ResponseEntity.ok(registrUser.createUser(registrDto));
     }
 }

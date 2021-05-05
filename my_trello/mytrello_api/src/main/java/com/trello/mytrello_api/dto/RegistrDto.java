@@ -1,10 +1,19 @@
 package com.trello.mytrello_api.dto;
 
+import com.trello.mytrello_api.validation.annotation.ValidPassword;
+import com.trello.mytrello_api.validation.annotation.ValidUniqEmail;
 import lombok.Data;
+
+import javax.validation.constraints.Email;
 
 @Data
 public class RegistrDto {
+
+    @Email(message = "Неккоректный email")
+    @ValidUniqEmail(message = "Такой email уже существует")
     private String email;
+
+    @ValidPassword(message = "Неправильный формат пароля. Пример: Qwer1")
     private String password;
     private String username;
     private String surname;

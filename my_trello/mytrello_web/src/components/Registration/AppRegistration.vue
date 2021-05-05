@@ -68,9 +68,11 @@ export default {
         })
             .then(response => response.json())
             .then(result => {
-              console.log(result)
               if (result.status === 200) {
                 router.push('/login')
+              } else if (result.status === 400) {
+                this.error.status = true
+                this.error.message = result.errors[0]
               } else {
                 this.error.status = true
                 this.error.message = this.errors.error
