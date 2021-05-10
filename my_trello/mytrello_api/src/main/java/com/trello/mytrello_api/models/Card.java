@@ -46,7 +46,7 @@ public class Card implements Serializable {
     @JoinColumn(name = "board_column")
     private BoardColumn boardColumn;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     @JoinTable
     private List<BoardMember> boardMembers;
 

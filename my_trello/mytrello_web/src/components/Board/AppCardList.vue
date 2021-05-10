@@ -166,6 +166,8 @@ export default {
     console.log(this.listsRefs)
     this.max_id = this.cards[this.cards.length - 1].id
     this.max_id_list = this.lists[this.lists.length - 1].id
+
+    this.$store.dispatch('board/mountBoardColumns', this.$route.params.id)
   }
 }
 </script>

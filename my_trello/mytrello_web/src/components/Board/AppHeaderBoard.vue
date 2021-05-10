@@ -2,20 +2,14 @@
   <header class="header__board">
     <div class="header__board--right">
       <div class="header__board-item">
-        Best_coder mainer
+        {{ getBoardAttr.name }}
       </div>
       <div class="vertical__line"></div>
-      <div class="header__board-team">Best coders</div>
+      <div class="header__board-team">{{ getBoardAttr.team.name }}</div>
       <div class="vertical__line"></div>
       <div class="header__board--members">
-        <div class="header__board--member-block admin">
-          <button class="main__header--username board__avatar" v-on:click="openPopup">
-            ДГ
-          </button>
-          <span class="admin__symbol"></span>
-        </div>
-        <button class="main__header--username board__avatar ">
-          RM
+        <button class="main__header--username board__avatar" v-on:click="openPopup(member.user)" v-for="member in getBoardMembersAttr">
+          {{member.user.email[0]}}
         </button>
       </div>
 
@@ -31,6 +25,18 @@
 <script>
 export default {
   name: "AppHeaderBoard",
+  data: () => ({
+    board: '',
+    boardMembers: []
+  }),
+  computed: {
+    getBoardAttr() {
+      return this.$store.getters['board/board']
+    },
+    getBoardMembersAttr(){
+      return this.$store.getters['board/boardMembers']
+    }
+  },
   methods: {
     clickInvitation() {
       this.$store.commit('activateInvitation')
@@ -38,9 +44,15 @@ export default {
     clickArchive() {
       this.$store.commit('activateArchive')
     },
-    openPopup() {
-      this.$store.commit('activePopup')
+    openPopup(user) {
+      this.$store.commit('activePopup',user)
     },
+  },
+  mounted() {
+    this.$store.dispatch('board/mountBoard', this.$route.params.id)
+    this.board = this.$store.getters['board/board']
+    // console.log(this.board.team.name)
+    this.$store.dispatch('board/mountBoardMembers', this.$route.params.id)
   }
 }
 </script>

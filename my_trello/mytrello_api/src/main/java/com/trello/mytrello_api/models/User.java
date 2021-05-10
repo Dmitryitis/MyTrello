@@ -7,8 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+
 @Data
 @Entity
 @Table(name = "account")

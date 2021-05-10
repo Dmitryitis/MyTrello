@@ -1,6 +1,9 @@
 package com.trello.mytrello_api.service.impl;
 
 import com.trello.mytrello_api.models.Board;
+import com.trello.mytrello_api.models.BoardMember;
+import com.trello.mytrello_api.models.User;
+import com.trello.mytrello_api.repository.BoardMemberRepository;
 import com.trello.mytrello_api.repository.BoardRepository;
 import com.trello.mytrello_api.repository.TeamRepository;
 import com.trello.mytrello_api.repository.UserRepository;
@@ -25,6 +28,9 @@ public class BoardServiceImpl implements BoardService {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private BoardMemberRepository boardMemberRepository;
+
     @Override
     public Map<Object, Object> createBoard(Map<Object, Object> json) {
         Board boardDto = new Board();
@@ -44,5 +50,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> getAllBoardByEmail(String email) {
         return boardRepository.findAllByUserEmail(email);
+    }
+
+    @Override
+    public List<BoardMember> getBoardMembers(int id) {
+        return boardMemberRepository.findBoardMemberByBoardId(id);
+    }
+
+    @Override
+    public Board getBoard(int id) {
+        return boardRepository.findById(id);
     }
 }

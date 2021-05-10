@@ -9,7 +9,7 @@
       </div>
       <div class="content__group--cards">
         <a href="#" class="content__group--card notext-decoration" v-show="board.team.name === team.name"
-           v-for="board in getBoards">
+           v-for="board in getBoards" v-on:click="clickBoard(board.id)">
           {{ board.name }}
         </a>
         <a href="#" class="content__group--card notext-decoration content__group_create__card"
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "AppMainContentLeft",
   computed: {
@@ -35,6 +37,9 @@ export default {
   methods: {
     createBoardModal() {
       this.$store.commit('activeModalBoard')
+    },
+    clickBoard(id){
+      router.push({name: 'Board',params: {id:id}})
     }
   },
   mounted() {

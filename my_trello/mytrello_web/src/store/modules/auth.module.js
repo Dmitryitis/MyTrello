@@ -11,7 +11,6 @@ export default {
     },
     mutations: {
         setToken(state, token) {
-            console.log(123)
             state.token = token
 
             let base64Url = token.split('.')[1];
@@ -23,7 +22,6 @@ export default {
             localStorage.setItem(TOKEN_KEY, token)
         },
         logout(state) {
-            console.log(1)
             state.token = null
             localStorage.removeItem(TOKEN_KEY)
         }

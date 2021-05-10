@@ -38,7 +38,6 @@ export default {
             }).then(response => response.json())
                 .then(result => {
                     state.boards = result
-                    console.log(state.boards)
                 })
         }
     },

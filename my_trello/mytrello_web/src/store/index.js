@@ -1,6 +1,7 @@
 import {createStore} from 'vuex'
 import auth from './modules/auth.module'
 import main from "@/store/modules/main.module";
+import board from './modules/board.module'
 
 export default createStore({
     state() {
@@ -13,9 +14,12 @@ export default createStore({
             activeArchive: false,
             activeCardList: false,
             activeCard: false,
-            user: {
-
-            }
+            user: {},
+            popupUser: {
+                email: '',
+                username: '',
+                surname: '',
+            },
         }
     },
     mutations: {
@@ -31,8 +35,9 @@ export default createStore({
             state.activeArchive = false;
             state.activeBoardModal = state.activeBoardModal !== true;
         },
-        activePopup(state) {
+        activePopup(state, user) {
             state.activePopup = state.activePopup !== true;
+            state.popupUser = user
         },
         activateInvitation(state) {
             state.activePopup = false;
@@ -55,8 +60,13 @@ export default createStore({
             state.activeCard = state.activeCard !== true;
         }
     },
+    getters: {
+        popupUser(state) {
+            return state.popupUser;
+        }
+    },
     actions: {},
     modules: {
-        auth, main
+        auth, main, board
     }
 })
