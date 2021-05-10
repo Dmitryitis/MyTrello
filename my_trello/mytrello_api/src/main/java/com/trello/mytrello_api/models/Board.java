@@ -1,6 +1,7 @@
 package com.trello.mytrello_api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "board")
+@NamedEntityGraph(
+        name = "board-team-user-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "user"),
+                @NamedAttributeNode(value = "team")
+        })
 public class Board implements Serializable {
 
     @Id
@@ -28,11 +35,11 @@ public class Board implements Serializable {
     @Column(name = "date_created")
     private Date date_created;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     private User user;
 

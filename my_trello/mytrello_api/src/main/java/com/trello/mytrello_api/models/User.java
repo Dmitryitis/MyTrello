@@ -1,6 +1,7 @@
 package com.trello.mytrello_api.models;
 
 import lombok.*;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,12 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "account")
+@NamedEntityGraph(
+        name = "user-graph",
+        attributeNodes = {
+        @NamedAttributeNode(value = "email")
+}
+)
 public class User implements Serializable {
 
     @Id

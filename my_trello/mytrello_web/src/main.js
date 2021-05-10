@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import GAuth from 'vue3-google-oauth2'
+import VueAxios from "vue-axios";
+import axios from "axios";
 
 const app = createApp(App)
 const gAuthOptions = {
@@ -10,4 +12,4 @@ const gAuthOptions = {
     scope: 'email openid profile',
     fetch_basic_profile: true
 }
-app.use(store).use(router).use(GAuth, gAuthOptions).mount('#app')
+app.use(store).use(router).use(GAuth, gAuthOptions).use(VueAxios,axios).mount('#app')

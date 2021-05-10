@@ -8,11 +8,18 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "workspace")
+@NamedEntityGraph(
+        name = "user-workspace-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "user")
+        }
+)
 public class Team implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +33,7 @@ public class Team implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_created;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator")
     private User user;
 

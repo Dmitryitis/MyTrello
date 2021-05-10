@@ -18,7 +18,6 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("api/v1/team/")
-@CrossOrigin
 public class TeamControllerV1 {
 
     @Autowired
@@ -26,7 +25,7 @@ public class TeamControllerV1 {
 
     @ApiOperation(value = "создание рабочего пространства")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "создал рабочее пространтво", response = TeamDto.class)})
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
         return ResponseEntity.ok(teamService.createTeam(teamDto));
     }
@@ -41,7 +40,7 @@ public class TeamControllerV1 {
     @ApiOperation(value = "получение всех простанств пользователя")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "получение пространств")})
     @GetMapping(value = "teams", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Team>> getTeamsByEmail(@RequestBody Map<String, String> json) {
-        return ResponseEntity.ok(teamService.getAllTeamsByEmail(json.get("email")));
+    public ResponseEntity<List<Team>> getTeamsByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(teamService.getAllTeamsByEmail(email));
     }
 }

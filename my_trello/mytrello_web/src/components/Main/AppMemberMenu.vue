@@ -12,7 +12,7 @@
       </button>
       <div class="menu__user--info">
         <div class="menu__user-name">Дмитрий Герасимов</div>
-        <div class="menu__user-email">dmitry.itis.gg@gmail.com</div>
+        <div class="menu__user-email">dmitry@admin.ru</div>
       </div>
     </div>
     <ul class="menu__user--ul">

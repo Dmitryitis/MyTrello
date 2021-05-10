@@ -25,7 +25,6 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
 @Slf4j
-@CrossOrigin
 public class AuthenticationRestControllerV1 {
 
     @Autowired

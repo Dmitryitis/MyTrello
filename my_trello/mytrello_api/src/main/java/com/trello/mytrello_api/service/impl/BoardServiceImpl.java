@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,9 +28,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Map<Object, Object> createBoard(Map<Object, Object> json) {
         Board boardDto = new Board();
-        boardDto.setName((String) json.get("email"));
-        boardDto.setTeam(teamRepository.findById((int) json.get("team_id")));
+        System.out.println(json.get("team_id"));
+        boardDto.setName((String) json.get("nameBoard"));
         boardDto.setUser(userRepository.findByEmail((String) json.get("email")));
+        boardDto.setTeam(teamRepository.findById((int) json.get("team_id")));
         boardDto.setDate_created(new Date());
 
         boardRepository.save(boardDto);
@@ -37,5 +39,10 @@ public class BoardServiceImpl implements BoardService {
         Map<Object, Object> response = new HashMap<>();
         response.put("status", 200);
         return response;
+    }
+
+    @Override
+    public List<Board> getAllBoardByEmail(String email) {
+        return boardRepository.findAllByUserEmail(email);
     }
 }

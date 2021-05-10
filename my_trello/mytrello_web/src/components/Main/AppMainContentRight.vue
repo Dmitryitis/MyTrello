@@ -15,11 +15,11 @@
           </svg>
         </button>
       </div>
-      <button class="main__content--item">
+      <button class="main__content--item" v-for="team in getTeams">
         <svg class="symbol__group--content">
           <use xlink:href="#group"></use>
         </svg>
-        <span class="main__content--text">Best Coders</span>
+        <span class="main__content--text">{{ team.name }}</span>
       </button>
     </div>
   </div>
@@ -28,10 +28,22 @@
 <script>
 export default {
   name: "AppMainContentRight",
+  data: () => ({
+    teams: []
+  }),
+  computed: {
+    getTeams() {
+      return this.$store.getters['main/teams']
+    }
+  },
   methods: {
-    clickPlus(){
+    clickPlus() {
       this.$store.commit('activeModal');
     }
+  },
+  mounted() {
+    this.$store.dispatch('main/mountBoards')
+    this.$store.dispatch('main/mountTeams')
   }
 }
 </script>

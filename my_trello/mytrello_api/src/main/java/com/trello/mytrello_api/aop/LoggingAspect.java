@@ -39,7 +39,7 @@ public class LoggingAspect {
         logger.log(Level.INFO, "LOG by AOP - invoking " + methodName + " " + Arrays.toString(joinPoint.getArgs()));
         Object result = joinPoint.proceed();
 
-        logger.log(Level.INFO,"LOG by AOP - result of "+ methodName + " "+ result);
+        logger.log(Level.INFO, "LOG by AOP - result of " + methodName + " " + result);
 
         return result;
     }

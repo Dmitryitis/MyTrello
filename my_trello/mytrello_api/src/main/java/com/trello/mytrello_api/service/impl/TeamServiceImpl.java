@@ -43,10 +43,9 @@ public class TeamServiceImpl implements TeamService {
         return from(teamRepository.findAll());
     }
 
+
     @Override
     public List<Team> getAllTeamsByEmail(String email) {
-        return teamRepository.findAllByUser(userRepository.findByEmail(email));
+        return teamRepository.findAllByUserEmail(email);
     }
-
-
 }

@@ -10,19 +10,20 @@
           <span class="team__modal--text">Повысьте удобство: создайте доску для комфортной работы.</span>
           <div class="modal__group">
             <label for="name_board" class="modal__team--label">Название доски</label>
-            <input type="text" id="name_board" class="modal__team--input" placeholder="Введите название доски">
+            <input type="text" id="name_board" class="modal__team--input" placeholder="Введите название доски"
+                   v-model="board.nameBoard">
             <div class="modal__team-undertext">Укажите название доски.</div>
           </div>
 
           <div class="modal__group">
             <label for="name_team" class="modal__team--label">Выберите команду</label>
-            <select name="name_team" class="modal__team--input" id="name_team">
-              <option value="Выберите команду">Выберите команду</option>
-              <option value="Best coders">Best coders</option>
+            <select name="name_team" class="modal__team--input" id="name_team" v-model="board.team_id">
+              <option value="0">Выберите команду</option>
+              <option :value="team.id" v-for="team in getTeams">{{ team.name }}</option>
             </select>
           </div>
 
-          <button class="modal__team--btn">Создать доску</button>
+          <button type="button" class="modal__team--btn" v-on:click="createBoard">Создать доску</button>
         </form>
       </div>
       <div class="modal__team--background">
@@ -36,17 +37,56 @@
 </template>
 
 <script>
+import store from "@/store";
+
 export default {
   name: "AppCreateBoard",
+  data: () => ({
+    selectTeam: 'Выберите команду',
+    nameBoard: '',
+    board: {
+      team_id: 0,
+      nameBoard: '',
+      email: ''
+    }
+  }),
   computed: {
     activeModal() {
       return this.$store.state.activeBoardModal;
+    },
+    getTeams() {
+      return this.$store.getters['main/teams']
     }
   },
   methods: {
     closeModal() {
       this.$store.commit('activeModalBoard')
+    },
+    createBoard() {
+      if (this.board.nameBoard !== "" && this.board.team_id !== 0) {
+        console.log(this.board)
+        fetch("http://localhost:9000/api/v1/board/create", {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${store.getters['auth/token']}`
+          },
+          mode: "cors",
+          body: JSON.stringify(this.board)
+        }).then(response => response.json())
+            .then(result => {
+              if (result.status === 200) {
+                this.board.team_id = 0
+                this.board.nameBoard = ""
+                this.$store.dispatch('main/mountBoards')
+                this.$store.commit('activeModalBoard')
+              }
+            })
+      }
     }
+  },
+  mounted() {
+    this.board.email = this.$store.getters['auth/user'].email
   }
 }
 </script>

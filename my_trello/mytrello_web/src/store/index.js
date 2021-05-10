@@ -13,6 +13,9 @@ export default createStore({
             activeArchive: false,
             activeCardList: false,
             activeCard: false,
+            user: {
+
+            }
         }
     },
     mutations: {
