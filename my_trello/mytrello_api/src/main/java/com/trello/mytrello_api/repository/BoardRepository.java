@@ -14,4 +14,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @EntityGraph(value = "board-team-user-entity-graph")
     Board findById(int id);
+
 }

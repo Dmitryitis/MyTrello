@@ -16,6 +16,7 @@ export default createStore({
             activeCard: false,
             user: {},
             popupUser: {
+                id: '',
                 email: '',
                 username: '',
                 surname: '',

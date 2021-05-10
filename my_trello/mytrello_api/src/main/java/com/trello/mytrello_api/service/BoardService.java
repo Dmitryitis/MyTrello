@@ -1,5 +1,6 @@
 package com.trello.mytrello_api.service;
 
+import com.trello.mytrello_api.dto.MemberDto;
 import com.trello.mytrello_api.models.Board;
 import com.trello.mytrello_api.models.BoardMember;
 import com.trello.mytrello_api.models.User;
@@ -15,4 +16,8 @@ public interface BoardService {
     List<BoardMember> getBoardMembers(int id);
 
     Board getBoard(int id);
+
+    void deleteMember(long id);
+
+    void addMember(MemberDto member);
 }

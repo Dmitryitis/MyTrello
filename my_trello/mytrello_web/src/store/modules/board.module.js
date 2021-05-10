@@ -6,6 +6,7 @@ export default {
         return {
             board_id: -1,
             board: {
+                id: '',
                 name: '',
                 team: {
                     name: ''
@@ -13,6 +14,7 @@ export default {
             },
             boardMembers: [],
             boardColumns: [],
+            allUsers: []
         }
     },
     mutations: {
@@ -57,6 +59,20 @@ export default {
                     console.log(result)
                     state.boardColumns = result
                 })
+        },
+        getAllUser(state) {
+            fetch('http://localhost:9000/api/v1/board/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${store.getters['auth/token']}`
+                },
+                mode: "cors"
+            }).then(response => response.json())
+                .then(result => {
+                    state.allUsers = result
+                    console.log(result)
+                })
         }
     },
     actions: {
@@ -68,7 +84,7 @@ export default {
         },
         mountBoardColumns({commit, dispatch}, id) {
             commit('getBoardColumns', id)
-        }
+        },
     },
     getters: {
         board(state) {
@@ -79,6 +95,9 @@ export default {
         },
         boardColumns(state) {
             return state.boardColumns;
+        },
+        allUsers(state) {
+            return state.allUsers;
         }
     }
 }

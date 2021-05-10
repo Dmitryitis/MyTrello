@@ -1,5 +1,6 @@
 package com.trello.mytrello_api.service.impl;
 
+import com.trello.mytrello_api.dto.MemberDto;
 import com.trello.mytrello_api.models.Board;
 import com.trello.mytrello_api.models.BoardMember;
 import com.trello.mytrello_api.models.User;
@@ -11,12 +12,14 @@ import com.trello.mytrello_api.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService {
 
     @Autowired
@@ -54,11 +57,25 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardMember> getBoardMembers(int id) {
-        return boardMemberRepository.findBoardMemberByBoardId(id);
+        return boardMemberRepository.findAllByBoardId(id);
     }
 
     @Override
     public Board getBoard(int id) {
         return boardRepository.findById(id);
+    }
+
+    @Override
+    public void deleteMember(long id) {
+        boardMemberRepository.deleteBoardMemberByUserId(id);
+    }
+
+    @Override
+    public void addMember(MemberDto member) {
+        BoardMember boardMember = new BoardMember();
+        boardMember.setBoard(boardRepository.findById(member.getBoard()));
+        boardMember.setUser(userRepository.findById(member.getUser()));
+
+        boardMemberRepository.save(boardMember);
     }
 }

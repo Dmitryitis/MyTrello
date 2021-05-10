@@ -8,6 +8,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -29,6 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<User> allUsers() {
+        return userRepository.findAll();
     }
 
 }

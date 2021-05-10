@@ -8,5 +8,10 @@ import java.util.List;
 
 public interface BoardMemberRepository extends JpaRepository<BoardMember, Integer> {
     @EntityGraph(value = "board-member-entity-graph")
-    List<BoardMember> findBoardMemberByBoardId(int id);
+    List<BoardMember> findAllByBoardId(int id);
+
+    @EntityGraph(value = "board-member-entity-graph")
+    void deleteBoardMemberByUserId(Long user_id);
+
+
 }

@@ -39,7 +39,7 @@ export default {
                 .then(result => {
                     state.boards = result
                 })
-        }
+        },
     },
     actions: {
         mountTeams({commit, dispatch}) {
