@@ -14,6 +14,27 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "card-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "user"),
+                @NamedAttributeNode(value = "boardColumn", subgraph = "boardcolumn-details"),
+                @NamedAttributeNode(value = "board", subgraph = "board-details")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "boardcolumn-details",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "board")
+                        }
+                ),
+                @NamedSubgraph(name = "board-details",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "user"),
+                                @NamedAttributeNode(value = "team")
+                        })
+        }
+)
 @Table(name = "board_card")
 public class Card implements Serializable {
 
@@ -38,15 +59,19 @@ public class Card implements Serializable {
         return archive;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_column")
     private BoardColumn boardColumn;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board")
+    private Board board;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable
     private List<BoardMember> boardMembers;
 

@@ -14,7 +14,8 @@ export default {
             },
             boardMembers: [],
             boardColumns: [],
-            allUsers: []
+            allUsers: [],
+            cards: [],
         }
     },
     mutations: {
@@ -73,6 +74,20 @@ export default {
                     state.allUsers = result
                     console.log(result)
                 })
+        },
+        getBoardCard(state, id) {
+            fetch(`http://localhost:9000/api/v1/board/${id}/cards`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${store.getters['auth/token']}`
+                },
+                mode: "cors"
+            }).then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    state.cards = result
+                })
         }
     },
     actions: {
@@ -85,6 +100,9 @@ export default {
         mountBoardColumns({commit, dispatch}, id) {
             commit('getBoardColumns', id)
         },
+        mountCards({commit, dispatch}, id) {
+            commit('getBoardCard', id)
+        }
     },
     getters: {
         board(state) {
@@ -98,6 +116,9 @@ export default {
         },
         allUsers(state) {
             return state.allUsers;
+        },
+        cards(state) {
+            return state.cards;
         }
     }
 }

@@ -64,51 +64,15 @@ export default {
         id: 1,
         name: 'ListOne'
       },
-      {
-        id: 2,
-        name: 'ListTwo',
-      },
-      {
-        id: 3,
-        name: 'ListThree'
-      },
     ],
     cards: [
       {
         id: 1,
         text: 'gggg',
-        name: 'ListOne'
+        boardColumn: {
+          name: 'ListOne'
+        },
       },
-      {
-        id: 2,
-        text: 'dfsdf',
-        name: 'ListOne'
-      },
-
-      {
-        id: 3,
-        text: 'dfsdfs',
-        name: 'ListOne'
-      },
-      {
-        id: 4,
-        text: 'dfssfsdfdsdf',
-        name: 'ListTwo'
-      },
-      {
-        id: 5,
-        text: 'fsdfs',
-        name: 'ListThree'
-      },
-      {
-        id: 6,
-        text: 'fsdfs',
-        name: 'ListThree'
-      }, {
-        id: 7,
-        text: 'fsdfs',
-        name: 'ListThree'
-      }
     ],
     max_id: -1
   }),
@@ -119,7 +83,7 @@ export default {
   },
   methods: {
     getCards(list) {
-      return this.cards.filter(card => card.name === list.name)
+      return this.cards.filter(card => card.boardColumn.name === list.name)
     },
     startDrag(event, item) {
       event.dataTransfer.dropEffect = 'move'
@@ -168,6 +132,12 @@ export default {
     this.max_id_list = this.lists[this.lists.length - 1].id
 
     this.$store.dispatch('board/mountBoardColumns', this.$route.params.id)
+    this.$store.dispatch('board/mountCards', this.$route.params.id)
+    this.$store.getters['board/boardColumns'].forEach(
+        item => this.listsRefs.push(true)
+    )
+    this.lists = this.$store.getters['board/boardColumns']
+    this.cards = this.$store.getters['board/cards']
   }
 }
 </script>
