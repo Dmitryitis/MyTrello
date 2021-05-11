@@ -10,4 +10,6 @@ public interface CardService {
     List<Card> getBoardCards(int id);
 
     void addCard(CardDto cardDto);
+
+    void updateCard(int column, long card);
 }

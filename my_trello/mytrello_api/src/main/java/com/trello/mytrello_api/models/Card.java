@@ -4,6 +4,7 @@ package com.trello.mytrello_api.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.mapstruct.Named;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.List;
         attributeNodes = {
                 @NamedAttributeNode(value = "user"),
                 @NamedAttributeNode(value = "boardColumn", subgraph = "boardcolumn-details"),
-                @NamedAttributeNode(value = "board", subgraph = "board-details")
+                @NamedAttributeNode(value = "board", subgraph = "board-details"),
         },
         subgraphs = {
                 @NamedSubgraph(
@@ -32,7 +33,7 @@ import java.util.List;
                         attributeNodes = {
                                 @NamedAttributeNode(value = "user"),
                                 @NamedAttributeNode(value = "team")
-                        })
+                        }),
         }
 )
 @Table(name = "board_card")

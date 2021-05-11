@@ -42,4 +42,12 @@ public class CardServiceImpl implements CardService {
 
         boardCardRepository.save(card);
     }
+
+    @Override
+    public void updateCard(int column, long card) {
+        Card update_card = boardCardRepository.findById(card);
+        update_card.setBoardColumn(boardColumnRepository.findById(column));
+
+        boardCardRepository.save(update_card);
+    }
 }

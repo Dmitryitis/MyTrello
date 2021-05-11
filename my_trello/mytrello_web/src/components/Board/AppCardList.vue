@@ -73,7 +73,7 @@ export default {
     cards: [
       {
         id: 1,
-        text: '',
+        title: '',
         boardColumn: {
           name: ''
         },
@@ -110,11 +110,29 @@ export default {
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('itemId', item.id)
+      console.log(item)
     },
     onDrop(event, list) {
       const itemId = event.dataTransfer.getData('itemId')
-      const item = this.cards.find(item => `${item.id}` === itemId)
-      item.name = list.name
+      console.log(list)
+      console.log(itemId)
+      // const item = this.cards.find(item => `${item.id}` === itemId)
+
+      fetch(`http://localhost:9000/api/v1/board/${list.id}/update_card/${itemId}`,{
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${store.getters['auth/token']}`
+        },
+        mode: "cors",
+      }).then(response => response.json())
+      .then(result => {
+        console.log(result)
+        if (result.status === 200){
+          this.$store.dispatch('board/mountCards', this.$route.params.id)
+          this.cards = this.$store.getters['board/cards']
+        }
+      })
     },
     addCard(i, list) {
       for (let j = 0; j < this.listsRefs.length; j++) {

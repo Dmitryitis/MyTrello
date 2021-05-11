@@ -37,4 +37,15 @@ public class BoardCardControllerV1 {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping(value = "{column}/update_card/{id}")
+    public ResponseEntity<?> updateCard(@PathVariable int column, @PathVariable long id) {
+
+        cardService.updateCard(column, id);
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("status", 200);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

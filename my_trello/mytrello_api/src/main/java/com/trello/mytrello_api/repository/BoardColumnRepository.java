@@ -11,5 +11,6 @@ public interface BoardColumnRepository extends JpaRepository<BoardColumn, Intege
     @EntityGraph(value = "boardcolumn-board-entity-graph")
     List<BoardColumn> findAllByBoardId(int id);
 
+    @EntityGraph(value = "boardcolumn-board-entity-graph")
     BoardColumn findById(long id);
 }
