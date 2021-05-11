@@ -80,4 +80,20 @@ public class BoardCardControllerV1 {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "card/{id}")
+    public ResponseEntity<?> getCard(@PathVariable long id) {
+        return ResponseEntity.ok(cardService.getCard(id));
+    }
+
+    @PutMapping(value = "description_card/{id}")
+    public ResponseEntity<?> descriptionCard(@PathVariable long id,@RequestBody String text) {
+
+        cardService.descriptionCard(id,text);
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("status", 203);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

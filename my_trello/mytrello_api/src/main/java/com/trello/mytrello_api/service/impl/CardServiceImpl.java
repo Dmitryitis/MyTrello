@@ -71,4 +71,17 @@ public class CardServiceImpl implements CardService {
         Card delete_card = boardCardRepository.findById(id);
         boardCardRepository.delete(delete_card);
     }
+
+    @Override
+    public Card getCard(long id) {
+        return boardCardRepository.findById(id);
+    }
+
+    @Override
+    public void descriptionCard(long id, String text) {
+        Card description = boardCardRepository.findById(id);
+
+        description.setDescription(text);
+        boardCardRepository.save(description);
+    }
 }

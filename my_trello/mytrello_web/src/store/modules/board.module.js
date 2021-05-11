@@ -16,6 +16,15 @@ export default {
             boardColumns: [],
             allUsers: [],
             cards: [],
+            curCard: {
+                id: '',
+                name: '',
+                title: '',
+                description: "",
+                boardColumn: {
+                    name: ''
+                }
+            }
         }
     },
     mutations: {
@@ -88,6 +97,20 @@ export default {
                     console.log(result)
                     state.cards = result
                 })
+        },
+        currentCard(state, id) {
+            fetch(`http://localhost:9000/api/v1/board/card/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${store.getters['auth/token']}`
+                },
+                mode: "cors"
+            }).then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    state.curCard = result;
+                })
         }
     },
     actions: {
@@ -119,6 +142,9 @@ export default {
         },
         cards(state) {
             return state.cards;
+        },
+        curCard(state) {
+            return state.curCard
         }
     }
 }

@@ -6,9 +6,9 @@
           <use xlink:href="#monitor"></use>
         </svg>
         <div class="card__content--infoCard">
-          <span class="card__content--title">sdfsdfsdf</span>
+          <span class="card__content--title">{{ card.title }}</span>
           <span class="card__content--subtitle">в колонке
-            <a href="#" class="notext-decoration">Список</a>
+            <a href="#" class="notext-decoration">{{ card.boardColumn.name }}</a>
           </span>
         </div>
 
@@ -29,12 +29,13 @@
 
           <div class="card__about">
             <div class="card__about--text">
-              dsdasda
+              {{ card.description }}
             </div>
-            <textarea id="card__about--text" placeholder="Введите описание" class="card__about--field" cols="30"
+            <textarea id="card__about--text" v-model="description.text" placeholder="Введите описание"
+                      class="card__about--field" cols="30"
                       rows="10"></textarea>
             <span class="card__about--action">
-            <button class="card__about--save">Сохранить</button>
+            <button class="card__about--save" type="button" v-on:click="clickDescription">Сохранить</button>
               <svg class="symbol__close--about">
                 <use xlink:href="#close"></use>
               </svg>
@@ -168,9 +169,17 @@ import store from "@/store";
 
 export default {
   name: "AppCardContent",
+  data: () => ({
+    description: {
+      text: ''
+    }
+  }),
   computed: {
     activeCard() {
       return this.$store.state.activeCard
+    },
+    card() {
+      return this.$store.getters['board/curCard']
     }
   },
   methods: {
@@ -195,6 +204,26 @@ export default {
               this.$store.commit('activateCard')
             }
           })
+    },
+    clickDescription() {
+      if (this.description.text !== '') {
+        fetch(`http://localhost:9000/api/v1/board/description_card/${this.$route.params.id}`, {
+          method: "put",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${store.getters['auth/token']}`
+          },
+          mode: "cors",
+          body: this.description.text
+        }).then(response => response.json())
+            .then(result => {
+              console.log(result)
+              if (result.status === 203) {
+                this.description.text = ''
+                this.$store.commit('board/currentCard', this.$route.params.id);
+              }
+            })
+      }
     }
   }
 }

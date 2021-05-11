@@ -18,4 +18,8 @@ public interface CardService {
     void backCard(int id);
 
     void deleteCard(int id);
+
+    Card getCard(long id);
+
+    void descriptionCard(long id,String text);
 }

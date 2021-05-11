@@ -19,6 +19,7 @@ export default {
   },
   methods: {
     clickCard() {
+      this.$store.commit('board/currentCard',this.id);
       router.push({name: "Card",params: {board_id: this.$store.state.boardId , id:this.id}})
       this.$store.commit('activateCard')
     }
