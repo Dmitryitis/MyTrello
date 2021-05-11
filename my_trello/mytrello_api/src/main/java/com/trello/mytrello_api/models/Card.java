@@ -86,4 +86,96 @@ public class Card implements Serializable {
     @ManyToMany
     @JoinTable
     private List<CheckList> checkLists;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDate_created() {
+        return date_created;
+    }
+
+    public void setDate_created(Date date_created) {
+        this.date_created = date_created;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public BoardColumn getBoardColumn() {
+        return boardColumn;
+    }
+
+    public void setBoardColumn(BoardColumn boardColumn) {
+        this.boardColumn = boardColumn;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public List<BoardMember> getBoardMembers() {
+        return boardMembers;
+    }
+
+    public void setBoardMembers(List<BoardMember> boardMembers) {
+        this.boardMembers = boardMembers;
+    }
+
+    public List<AttachFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<AttachFile> files) {
+        this.files = files;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public List<CheckList> getCheckLists() {
+        return checkLists;
+    }
+
+    public void setCheckLists(List<CheckList> checkLists) {
+        this.checkLists = checkLists;
+    }
 }

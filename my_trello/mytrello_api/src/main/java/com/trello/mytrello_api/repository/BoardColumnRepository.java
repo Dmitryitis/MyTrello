@@ -1,6 +1,5 @@
 package com.trello.mytrello_api.repository;
 
-import com.trello.mytrello_api.models.Board;
 import com.trello.mytrello_api.models.BoardColumn;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +10,6 @@ public interface BoardColumnRepository extends JpaRepository<BoardColumn, Intege
 
     @EntityGraph(value = "boardcolumn-board-entity-graph")
     List<BoardColumn> findAllByBoardId(int id);
+
+    BoardColumn findById(long id);
 }
