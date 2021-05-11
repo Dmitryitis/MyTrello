@@ -50,4 +50,25 @@ public class CardServiceImpl implements CardService {
 
         boardCardRepository.save(update_card);
     }
+
+    @Override
+    public void archiveCard(int id) {
+        Card archive_card = boardCardRepository.findById(id);
+        archive_card.setArchive(true);
+        boardCardRepository.save(archive_card);
+    }
+
+    @Override
+    public void backCard(int id) {
+        Card back_card = boardCardRepository.findById(id);
+        back_card.setArchive(false);
+
+        boardCardRepository.save(back_card);
+    }
+
+    @Override
+    public void deleteCard(int id) {
+        Card delete_card = boardCardRepository.findById(id);
+        boardCardRepository.delete(delete_card);
+    }
 }

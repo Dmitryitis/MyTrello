@@ -12,7 +12,7 @@
     </header>
     <div class="card__list--cards">
       <div class="drag_start" draggable="true" v-on:dragstart="startDrag($event,card)"
-           v-show="card.boardColumn.name === list.name" v-for="card in getCardsBoard"
+           v-show="card.boardColumn.name === list.name && card.archive === false" v-for="card in getCardsBoard"
            :key="card.id">
         <app-card v-bind:text="card.title" v-bind:id="card.id"></app-card>
       </div>
@@ -118,7 +118,7 @@ export default {
       console.log(itemId)
       // const item = this.cards.find(item => `${item.id}` === itemId)
 
-      fetch(`http://localhost:9000/api/v1/board/${list.id}/update_card/${itemId}`,{
+      fetch(`http://localhost:9000/api/v1/board/${list.id}/update_card/${itemId}`, {
         method: 'put',
         headers: {
           'Content-Type': 'application/json',
@@ -126,13 +126,13 @@ export default {
         },
         mode: "cors",
       }).then(response => response.json())
-      .then(result => {
-        console.log(result)
-        if (result.status === 200){
-          this.$store.dispatch('board/mountCards', this.$route.params.id)
-          this.cards = this.$store.getters['board/cards']
-        }
-      })
+          .then(result => {
+            console.log(result)
+            if (result.status === 200) {
+              this.$store.dispatch('board/mountCards', this.$route.params.id)
+              this.cards = this.$store.getters['board/cards']
+            }
+          })
     },
     addCard(i, list) {
       for (let j = 0; j < this.listsRefs.length; j++) {

@@ -154,7 +154,7 @@
           <div class="card__sidebar--item">Чек-лист</div>
           <div class="card__sidebar--item">Срок</div>
           <div class="card__sidebar--item">Вложение</div>
-          <div class="card__sidebar--item">Архивация</div>
+          <div class="card__sidebar--item" v-on:click="clickArchive">Архивация</div>
         </div>
       </div>
 
@@ -163,6 +163,9 @@
 </template>
 
 <script>
+import router from "@/router";
+import store from "@/store";
+
 export default {
   name: "AppCardContent",
   computed: {
@@ -172,8 +175,27 @@ export default {
   },
   methods: {
     closeCard() {
+      router.push({name: "Board", params: {id: this.$store.state.boardId}})
       this.$store.commit('activateCard')
     },
+    clickArchive() {
+      fetch(`http://localhost:9000/api/v1/board/archive_card/${this.$route.params.id}`, {
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${store.getters['auth/token']}`
+        },
+        mode: "cors",
+      }).then(response => response.json())
+          .then(result => {
+            console.log(result)
+            if (result.status === 200) {
+              this.$store.dispatch('board/mountCards', this.$store.state.boardId)
+              router.push({name: "Board", params: {id: this.$store.state.boardId}})
+              this.$store.commit('activateCard')
+            }
+          })
+    }
   }
 }
 </script>

@@ -48,4 +48,36 @@ public class BoardCardControllerV1 {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping(value = "archive_card/{id}")
+    public ResponseEntity<?> archiveCard(@PathVariable int id) {
+
+        cardService.archiveCard(id);
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("status", 200);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping(value = "back_card/{id}")
+    public ResponseEntity<?> backCard(@PathVariable int id) {
+
+        cardService.backCard(id);
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("status", 200);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping(value = "delete_card/{id}")
+    public ResponseEntity<?> deleteCard(@PathVariable int id) {
+        cardService.deleteCard(id);
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("status", 203);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

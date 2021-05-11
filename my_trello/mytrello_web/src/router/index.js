@@ -41,6 +41,12 @@ const router = createRouter({
                 auth: true
             }
         },
+        {
+            path: '/:board_id/card/:id', component: Board, name: "Card",
+            meta: {
+                auth: true
+            }
+        }
     ]
 })
 

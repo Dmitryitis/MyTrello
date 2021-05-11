@@ -12,4 +12,10 @@ public interface CardService {
     void addCard(CardDto cardDto);
 
     void updateCard(int column, long card);
+
+    void archiveCard(int id);
+
+    void backCard(int id);
+
+    void deleteCard(int id);
 }

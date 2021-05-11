@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container" v-on:click="clickCard">
+  <div class="card-container" v-on:click="clickCard(id)">
     <div class="card-body">
       <p>
         {{ text }}
@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "AppCard",
   props: {
@@ -17,6 +19,7 @@ export default {
   },
   methods: {
     clickCard() {
+      router.push({name: "Card",params: {board_id: this.$store.state.boardId , id:this.id}})
       this.$store.commit('activateCard')
     }
   }

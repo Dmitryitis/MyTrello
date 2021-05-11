@@ -21,6 +21,7 @@ export default createStore({
                 username: '',
                 surname: '',
             },
+            boardId: -1,
         }
     },
     mutations: {

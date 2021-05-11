@@ -40,6 +40,7 @@ import java.util.List;
 public class Card implements Serializable {
 
     @Id
+    @Column(name = "card_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

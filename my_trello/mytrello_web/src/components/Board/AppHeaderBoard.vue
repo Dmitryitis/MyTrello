@@ -51,7 +51,7 @@ export default {
   mounted() {
     this.$store.dispatch('board/mountBoard', this.$route.params.id)
     this.board = this.$store.getters['board/board']
-    // console.log(this.board.team.name)
+    this.$store.state.boardId = this.$route.params.id
     this.$store.dispatch('board/mountBoardMembers', this.$route.params.id)
   }
 }
