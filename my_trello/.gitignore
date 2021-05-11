@@ -1,3 +1,4 @@
 mytrello_web/node_modules
 mytrello_web/package-lock.json
 mytrello_web/dist
+.idea/
